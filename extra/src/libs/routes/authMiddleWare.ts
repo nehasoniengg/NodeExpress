@@ -1,17 +1,25 @@
 import * as jwt from 'jsonwebtoken';
-import {hasPermission} from './hasPermission';
-export default (module, permissionType) => (req, res, next) => {
-    const token= req.header('Authorization');
-       console.log('token value : ::: :',token);  
-
-   const user = jwt.verify(token,process.env.key);
-   console.log('user  ::::::',user);
-   if (hasPermission(module, permissionType)) {
-       console.log('modul and permission type',module, permissionType);
-   } else {
-        next('Wrong Permission');
-       }
+//import {hasPermission} from './hasPermission';
+//import hasPermission from '../../../utils/permissions';
+export default function (module, permissionType) {
+    return async function (req, res, next) {
+        console.log('user  ::::::', process.env.key);
+        const token= req.header('Authorization');
+           console.log('token value : ::: :',token);  
     
-
-    
+      const user = jwt.verify(token,process.env.key);
+      
+      try{
+        const user = jwt.verify(token,process.env.key);
+          if (!user){
+              throw new Error('not authorized');
+          } else{
+            next({ status: 401, message: "Wrong Permission" });
+             
+          }
+      }
+      catch (err) {
+           next({ status: 403, message: "Unauthorized Access" });
+         } 
+    }
 }

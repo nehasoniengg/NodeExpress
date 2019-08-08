@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "babel-node extra --presets env",
-    "nodemon": "nodemon ./dist/index.js",
+    "nodemon": "nodemon ./dist/src/index.js",
     "start": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
     "lint:fix": "npm run lint --fix",
     "validation": "node ./extra/utils/validation",

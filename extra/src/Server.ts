@@ -47,7 +47,7 @@ public listen() {
     //      })
 
         app.use('/health-check', (req, res) => {
-        console.log('inside the health routes');
+        console.log('inside the health-check');
         res.send('I am ok and fine ');
         });
         // app.use('/api', router);
